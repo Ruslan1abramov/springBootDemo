@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -10,9 +11,13 @@ import javax.persistence.Id;
 @Entity
 class Item {
 
+    @ApiModelProperty(notes = "The database generated product ID")
     private @Id @GeneratedValue Long id;
+    @ApiModelProperty(notes = "Item's name")
     private String name;
+    @ApiModelProperty(notes = "Amount of items available")
     private int amount;
+    @ApiModelProperty(notes = "Item's inventory code")
     private String invCode;
 
     Item(){}
