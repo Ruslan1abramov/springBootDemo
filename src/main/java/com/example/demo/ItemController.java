@@ -23,7 +23,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
-@Api(value="onlinestore", description="Operations pertaining to items in Online Store")
+@Api(value="onlineStore", description="Operations pertaining to items in Online Store")
 class ItemController {
 
     private final ItemRepository repository;
