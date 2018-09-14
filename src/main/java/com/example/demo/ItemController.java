@@ -8,8 +8,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,14 +30,15 @@ class ItemController {
 
     private final ItemRepository repository;
     private final ItemResourceAssembler assembler;
-
+    
+    @Autowired
     ItemController(ItemRepository repository , ItemResourceAssembler assembler) {
         this.repository = repository;
         this.assembler = assembler;
     }
 
     // Aggregate root
-    @ApiOperation(value = "View a list of all available products",response = Resources.class)
+    @ApiOperation(value = "View a list of all available products",response = Resources.class,produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved items"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
