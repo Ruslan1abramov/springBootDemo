@@ -13,13 +13,7 @@ import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -44,7 +38,7 @@ class ItemController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     }
     )
-    @GetMapping("/items")
+    @RequestMapping(value = "/items",method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, "application/hal+json"})
     Resources<Resource<Item>> all() {
 
         List<Resource<Item>> items = repository.findAll().stream()
@@ -56,7 +50,7 @@ class ItemController {
     }
 
     @ApiOperation(value = "Adding a new item",produces = "application/json")
-    @PostMapping("/items")
+    @RequestMapping(value = "/items",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE, "application/hal+json"})
     ResponseEntity<?> newItem(@RequestBody Item newItem) throws URISyntaxException {
 
         Resource<Item> resource = assembler.toResource(repository.save(newItem));
@@ -67,13 +61,13 @@ class ItemController {
     }
 
     // Single item
-    @ApiOperation(value = "View item by id",response = Resource.class)
+    @ApiOperation(value = "View item by id",response = Resource.class, produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved item"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     }
     )
-    @GetMapping("/items/{id}")
+    @RequestMapping(value = "/items/{id}",method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, "application/hal+json"})
     Resource<Item> one(@PathVariable Long id) {
 
         Item item = repository.findById(id)
