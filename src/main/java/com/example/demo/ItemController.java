@@ -38,6 +38,8 @@ class ItemController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     }
     )
+
+    @CrossOrigin
     @RequestMapping(value = "/items",method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, "application/hal+json"})
     Resources<Resource<Item>> all() {
 
@@ -49,6 +51,7 @@ class ItemController {
                 linkTo(methodOn(ItemController.class).all()).withSelfRel());
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Adding a new item",produces = "application/json")
     @RequestMapping(value = "/items",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE, "application/hal+json"})
     ResponseEntity<?> newItem(@RequestBody Item newItem) throws URISyntaxException {
@@ -61,6 +64,7 @@ class ItemController {
     }
 
     // Single item
+    @CrossOrigin
     @ApiOperation(value = "View item by id",response = Resource.class, produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved item"),
@@ -76,6 +80,7 @@ class ItemController {
         return assembler.toResource(item);
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Updating specific item amount")
     @PutMapping("/items/{id}")
     ResponseEntity<?> replaceItem(@RequestBody AmountToChange amountToChange, @PathVariable Long id)  throws URISyntaxException{
@@ -97,6 +102,7 @@ class ItemController {
                 .body(resource);
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Delete item")
     @DeleteMapping("/items/{id}")
     ResponseEntity<?> deleteItem(@PathVariable Long id) {
